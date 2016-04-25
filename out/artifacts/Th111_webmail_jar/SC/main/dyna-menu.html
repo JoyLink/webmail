@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <title> settings</title>
+
+    <script src="/files/./assets/js/jquery-1.8.1.min.js"></script>
+    <script>
+                $(document).ready(function(){
+                  $("#refresh").click(function(){
+                    $.get("/acountlist",
+                    {
+
+                    },
+                    function(data){
+                       document.getElementById("select").innerHTML = data;
+                    });
+                  });
+                });
+
+             function choose()
+                {
+
+                    txt=$("#account").val();
+
+                    $.get("/alterAccount",
+                    {
+                        account: txt
+                    },
+                    function(data) {
+
+                    });
+
+                }
+             function afterload() {
+                $.get("/acountlist",
+                    {
+
+                    },
+                    function(data){
+                       document.getElementById("select").innerHTML = data;
+                    });
+             }
+
+
+              function check(){
+            var div = document.getElementById("error");
+            div.innerHTML = "";
+            var password = document.getElementById("pwd").value;
+            if (password == "") {
+                div.innerHTML = "password shouldn't be null";
+                document.getElementById("pwd").focus();
+                return false;
+            }
+            if (password.length < 4 || password.length > 12) {
+                div.innerHTML = "length of password should be 4~12";
+                document.getElementById("pwd").select();
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</head>
+<body onload="afterload()">
+<table>
+    <tr>
+        <td>
+            Add a new acount here
+            <hr>
+            <form name="addacount" method="post" action="/addAcount">
+                <table align="center">
+                    <tr>
+                        <td>
+                            EmailAddress:
+                        </td>
+                        <td>
+                            <input id="text1" type="text" name="addname">
+
+                            <div id="div1" style="display:inline">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PassWord:
+                        </td>
+                        <td>
+                            <input id="text2" type="password" name="addpwd">
+
+                            <div id="div2" style="display:inline">
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr align="center">
+                        <td align="center">
+                            <input type="submit" value="submit" name="tect6">
+                        </td>
+                        <td>
+                            <input type="reset" value="reset" name="text7">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <hr>
+            Current Account:<button id="refresh">Refresh accounts</button>
+
+            <div id="select">
+                <select>
+
+                </select>
+            </div>
+
+    </td>
+    </tr>
+
+    <tr>
+        <td>
+            <hr>
+            Change password:
+
+            <form name="alterpwd" method="post" action="/altPWD" onsubmit="return check()">
+
+
+                    New Password:
+
+                    <input id="pwd" type="text" name="pwd">
+
+                <div id = "error" style="display:inline"></div>
+                <br>
+                    <input type="submit" value="submit" name="tect6">
+                </form>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <hr>
+            <a href="/files/main/contact.html"> Add contact for this account:</a>
+        </td>
+    </tr>
+
+</table>
+
+<body>
+</html>

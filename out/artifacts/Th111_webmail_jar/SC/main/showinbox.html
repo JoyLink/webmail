@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+     <script src="/files/./assets/js/jquery-1.8.1.min.js"></script>
+     <script>
+                $(document).ready(function(){
+                  $("#refresh").click(function(){
+                    $.get("/showinbox",
+                    {
+                        db: "yes"
+                    },
+                    function(data){
+
+                        document.getElementById("inbox").innerHTML = data;
+                    });
+                  });
+                });
+                function afterload() {
+                    $.get("/showinbox",
+                    {
+
+                    },
+                    function(data){
+
+                        document.getElementById("inbox").innerHTML = data;
+                    });
+
+                }
+
+                function choose() {
+
+                    txt = document.getElementById("sort").value;
+                    $.get("/showinbox",
+                    {
+                        sortby: txt
+                    },
+                    function(data){
+
+                        document.getElementById("inbox").innerHTML = data;
+                    });
+                }
+
+                function search() {
+                    $.get("/showinbox",
+                    {
+                        col: document.getElementById("col").value,
+                        text: document.getElementById("text1").value
+                    },
+                    function(data){
+                        document.getElementById("inbox").innerHTML = data;
+                    });
+
+                }
+
+    </script>
+
+ </head>
+
+<body onload="afterload()">
+<div>
+<button id="refresh">Check Inbox</button>
+    <br>
+<select id="sort" onchange="choose()">
+    <option>default</option>
+    <option>subject</option>
+    <option>from</option>
+    <option>time</option>
+
+</select>
+    <br>
+    <select id="col">
+        <option>
+            mailfrom
+        </option>
+        <option>
+            mailto
+        </option>
+        <option>
+            subject
+        </option>
+
+    </select>
+
+    <input id="text1" type="text" name="text1" >
+    <input type="submit" value="Search" name="tect6" onclick="search()">
+
+
+
+<table border="1" align="center" width="1100" id="inbox">
+    <tr>
+        <th>Subject</th>
+        <th>From</th>
+        <th>Time</th>
+    </tr>
+
+</table>
+</div>
+</body>
